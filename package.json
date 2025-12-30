@@ -1,0 +1,39 @@
+{
+  "name": "typescript-template",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "clean": "node -e \"try { require('fs').rmSync('dist', { recursive: true, force: true }) } catch(e){}\"",
+    "type-check": "tsc --noEmit",
+    "build": "node --run clean && node --run type-check && node --run build:bundle",
+    "build:bundle": "esbuild src/index.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/app.js --sourcemap",
+    "build:prod": "node --run clean && node --run type-check && esbuild src/index.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/app.js --sourcemap --minify",
+    "watch": "nodemon --watch dist --exec 'node dist/app.js' & esbuild src/index.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/app.js --watch",
+    "start": "node dist/app.js",
+    "dev": "node --run build && node --run start",
+    "lint": "eslint src",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "sbom": "pnpm dlx @cyclonedx/cdxgen -o sbom.json",
+    "licenses": "pnpm licenses list --json > licenses.json"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.0.0",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.0.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.1"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
