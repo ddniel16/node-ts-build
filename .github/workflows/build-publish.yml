@@ -1,0 +1,106 @@
+name: Build, Lint, Test & Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  lint-and-test:
+    name: Lint & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint code
+        run: |
+          node --run lint
+          node --run type-check
+          node --run format:check
+          node --run build:prod
+
+      - name: Build project
+        run: node --run build:prod
+
+      - name: Verify dist files
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist directory not created"
+            exit 1
+          fi
+          if [ ! -f "dist/app.js" ]; then
+            echo "Error: dist/app.js not created"
+            exit 1
+          fi
+          echo "✓ Build artifacts verified"
+
+  publish-npm:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    if: github.ref_type == 'tag' && github.event.base_ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to npm
+        run: npm publish --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+  publish-github:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    if: github.ref_type == 'tag' && github.event.base_ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://npm.pkg.github.com/
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to GitHub Packages
+        run: npm publish --registry=https://npm.pkg.github.com/ --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
