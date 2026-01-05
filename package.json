@@ -1,5 +1,5 @@
 {
-  "name": "typescript-template",
+  "name": "@ddniel16/typescript-template",
   "description": "A template for building TypeScript command-line applications using esbuild.",
   "keywords": [
     "cli",
@@ -16,11 +16,11 @@
   "version": "0.0.1",
   "type": "module",
   "bin": {
-    "typescript-template": "./dist/app.js"
+    "typescript-template": "dist/app.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ddniel16/node-ts-build.git"
+    "url": "git+https://github.com/ddniel16/node-ts-build.git"
   },
   "scripts": {
     "clean": "node -e \"try { require('fs').rmSync('dist', { recursive: true, force: true }) } catch(e){}\"",
