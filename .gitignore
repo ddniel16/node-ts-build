@@ -22,3 +22,8 @@ dist/
 sbom.json
 bom.json
 licenses.json
+
+# Testing
+coverage/
+.vitest/
+html/

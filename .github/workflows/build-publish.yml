@@ -32,7 +32,17 @@ jobs:
           node --run lint
           node --run type-check
           node --run format:check
-          node --run build:prod
+
+      - name: Run tests
+        run: node --run test:ci
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
 
       - name: Build project
         run: node --run build:prod
@@ -101,6 +111,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Publish to GitHub Packages
-        run: npm publish --registry=https://npm.pkg.github.com/ --dry-run
+        run: npm publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
