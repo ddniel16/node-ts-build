@@ -58,9 +58,10 @@ export const config = {
   // Configuración específica del entorno (con override desde variables de entorno)
   host: getEnvVar('HOST') || envConfigs[currentEnv].host,
   port: getEnvVar('PORT') ? parseInt(getEnvVar('PORT')!, 10) : envConfigs[currentEnv].port,
-  debug: getEnvVar('DEBUG') !== undefined
-    ? parseBoolean(getEnvVar('DEBUG'), envConfigs[currentEnv].debug)
-    : envConfigs[currentEnv].debug,
+  debug:
+    getEnvVar('DEBUG') !== undefined
+      ? parseBoolean(getEnvVar('DEBUG'), envConfigs[currentEnv].debug)
+      : envConfigs[currentEnv].debug,
 
   // Variables de entorno adicionales
   logLevel: getEnvVar('LOG_LEVEL') || (currentEnv === 'production' ? 'info' : 'debug'),

@@ -11,6 +11,9 @@ build({
   outfile: 'dist/app.js',
   minify: isProduction,
   sourcemap: true,
+  banner: {
+    js: '#!/usr/bin/env node',
+  },
   external: [], // Dependencias a excluir del bundle
   metafile: true,
   logLevel: 'info',

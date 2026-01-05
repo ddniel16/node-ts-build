@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Tools } from './tools.js';
 import { config } from './config/env.js';
 

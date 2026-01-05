@@ -1,7 +1,27 @@
 {
   "name": "typescript-template",
+  "description": "A template for building TypeScript command-line applications using esbuild.",
+  "keywords": [
+    "cli",
+    "command-line",
+    "esbuild",
+    "nodejs",
+    "template",
+    "typescript"
+  ],
+  "author": {
+    "name": "ddniel16",
+    "url": "https://ddniel16.dev"
+  },
   "version": "0.0.1",
   "type": "module",
+  "bin": {
+    "typescript-template": "./dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ddniel16/node-ts-build.git"
+  },
   "scripts": {
     "clean": "node -e \"try { require('fs').rmSync('dist', { recursive: true, force: true }) } catch(e){}\"",
     "type-check": "tsc --noEmit",
@@ -17,19 +37,29 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
     "sbom": "pnpm dlx @cyclonedx/cdxgen -o sbom.json",
-    "licenses": "pnpm licenses list --json > licenses.json"
+    "licenses": "pnpm licenses list --json > licenses.json",
+    "link": "pnpm link --global",
+    "unlink": "pnpm unlink --global",
+    "postbuild": "chmod +x dist/app.js",
+    "preversion": "node --run type-check && node --run lint && node --run format:check && node --run build:prod",
+    "postversion": "git push && git push --tags"
   },
+  "files": [
+    "./dist/app.js",
+    "./LICENSE.txt",
+    "./README.md"
+  ],
   "devDependencies": {
     "@eslint/js": "^9.39.2",
-    "@types/node": "^22.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
+    "@types/node": "^22.19.3",
+    "@typescript-eslint/eslint-plugin": "^8.51.0",
+    "@typescript-eslint/parser": "^8.51.0",
     "esbuild": "^0.27.2",
-    "eslint": "^9.0.0",
+    "eslint": "^9.39.2",
     "nodemon": "^3.1.11",
-    "prettier": "^3.0.0",
+    "prettier": "^3.7.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.1"
+    "typescript-eslint": "^8.51.0"
   },
   "dependencies": {
     "chalk": "^5.6.2"
