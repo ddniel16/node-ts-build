@@ -36,14 +36,6 @@ jobs:
       - name: Run tests
         run: node --run test:ci
 
-      - name: Upload coverage reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: coverage-report
-          path: coverage/
-          retention-days: 7
-
       - name: Build project
         run: node --run build:prod
 
