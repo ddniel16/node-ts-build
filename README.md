@@ -102,7 +102,7 @@ pnpm run test:coverage
 
 ### Estructura de Tests
 
-```
+```bash
 test/
 ├── tools.test.ts        # Tests para src/tools.ts
 └── config/
@@ -112,6 +112,7 @@ test/
 ### Umbrales de Cobertura
 
 El proyecto requiere cumplir estos umbrales mínimos:
+
 - **Lines**: 70%
 - **Functions**: 70%
 - **Branches**: 60%
