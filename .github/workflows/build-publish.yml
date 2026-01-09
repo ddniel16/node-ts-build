@@ -97,12 +97,12 @@ jobs:
           version: 10
 
       - name: Publish to npm (dry-run)
-        run: npm publish --dry-run
+        run: npm publish --dry-run --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -127,11 +127,11 @@ jobs:
           version: 10
 
       - name: Publish to GitHub Packages (dry-run)
-        run: npm publish --dry-run
+        run: npm publish --dry-run --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Publish to GitHub Packages
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
