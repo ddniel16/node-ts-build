@@ -1,0 +1,54 @@
+# Excluir archivos de desarrollo del paquete npm
+# IMPORTANTE: Este archivo anula .gitignore para npm publish
+
+# Código fuente (no compilado)
+src/
+test/
+
+# Configuración de desarrollo
+.github/
+.vscode/
+.husky/
+
+# Archivos de configuración
+esbuild.config.js
+eslint.config.js
+tsconfig.json
+vitest.config.ts
+.prettierrc
+.editorconfig
+.env.example
+
+# Tests y coverage
+coverage/
+html/
+*.test.ts
+*.spec.ts
+
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Logs
+*.log
+
+# Variables de entorno
+.env
+.env.local
+.env.*.local
+
+# Temporales
+*.tmp
+.cache/
+
+# SBOM y licencias generadas
+sbom.json
+bom.json
+licenses.json
+
+# Documentación interna
+README.WORKFLOWS.md
+
+# Archivos de git
+.gitignore
+.gitattributes
