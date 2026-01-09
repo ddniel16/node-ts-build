@@ -51,9 +51,9 @@
     "postversion": "git push && git push --tags"
   },
   "files": [
-    "./dist/app.js",
-    "./LICENSE.txt",
-    "./README.md"
+    "dist/",
+    "LICENSE.txt",
+    "README.md"
   ],
   "devDependencies": {
     "@eslint/js": "^9.39.2",
