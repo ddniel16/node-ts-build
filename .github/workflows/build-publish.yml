@@ -96,13 +96,19 @@ jobs:
         with:
           version: 10
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        run: node --run build:prod
+
       - name: Publish to npm (dry-run)
-        run: npm publish --dry-run --access public
+        run: pnpm publish --dry-run --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
@@ -112,8 +118,8 @@ jobs:
     needs: install-dependencies-production
     if: github.event.base_ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js 24
         uses: actions/setup-node@v4
@@ -126,18 +132,18 @@ jobs:
         with:
           version: 10
 
-      # - name: Install dependencies
-      #   run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      # - name: Build project
-      #   run: node --run build:prod
+      - name: Build project
+        run: node --run build:prod
 
       - name: Publish to GitHub Packages (dry-run)
-        run: npm publish --dry-run --access public
+        run: pnpm publish --dry-run --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Publish to GitHub Packages
-        run: npm publish --access public
+        run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
