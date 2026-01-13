@@ -13,7 +13,7 @@
     "name": "ddniel16",
     "url": "https://ddniel16.dev"
   },
-  "version": "0.6.4",
+  "version": "0.6.5",
   "type": "module",
   "bin": {
     "typescript-template": "dist/app.js"
